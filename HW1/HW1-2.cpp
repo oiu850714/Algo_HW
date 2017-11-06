@@ -16,10 +16,7 @@ int main()
     while(n--)
     {
         cin >> S1 >> S2;
-        if(S1.size() != S2.size())
-            cout << "No\n";
-        else
-            f(S1, S2);
+        f(S1, S2);
     }
 }
 
@@ -53,7 +50,7 @@ void compute_min_equavelence(string &S_result, const string &S_start)
         string equivelenct_min_S_start_right;
         compute_min_equavelence(equivelenct_min_S_start_left, S_start_left);
         compute_min_equavelence(equivelenct_min_S_start_right, S_start_right);
-        if(S_start_left <= S_start_right)
+        if(equivelenct_min_S_start_left <= equivelenct_min_S_start_right)
             S_result = equivelenct_min_S_start_left + equivelenct_min_S_start_right;
         else
             S_result = equivelenct_min_S_start_right + equivelenct_min_S_start_left;
