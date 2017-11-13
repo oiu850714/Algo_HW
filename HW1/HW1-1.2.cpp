@@ -52,7 +52,7 @@ int main()
         points_sorted_by_y.push_back(p);
         //points_nth_element_by_y.push_back(p);
     }
-    sort(points_sorted_by_x.begin(), points_sorted_by_x.end(), compX);
+    //sort(points_sorted_by_x.begin(), points_sorted_by_x.end(), compX);
     sort(points_sorted_by_y.begin(), points_sorted_by_y.end(), compY);
     //sort(points_sorted_by_x.begin(), points_sorted_by_x.end());
 
@@ -78,7 +78,7 @@ bool compY(point_class p1, point_class p2)
 int64_t closest_pair(vector<point_class>::iterator first,
     vector<point_class>::iterator last)
 {
-    if(last - first <= 6000)
+    if(last - first <= 800)
         return bruteForce(first, last);
     
     auto mid = (last-first)/2;
@@ -90,7 +90,7 @@ int64_t closest_pair(vector<point_class>::iterator first,
         return subproblem_min;
     
     vector<point_class> in_sub_min_boundary;
-    for(auto it = points_sorted_by_x.begin(); it < points_sorted_by_x.end(); it++)
+    for(auto it = first; it < last; it++)
     {
         if(flag == 0)
             ;
@@ -107,6 +107,7 @@ int64_t closest_pair(vector<point_class>::iterator first,
         if( abs((it->y - (first + mid)->y)) < subproblem_min)
             in_sub_min_boundary.push_back(*it);
     }
+    sort(in_sub_min_boundary.begin(), in_sub_min_boundary.end(), compX);
     //select points whose y - mid's y < sudproblem_min
 
     for(auto it_first = in_sub_min_boundary.begin(); it_first < in_sub_min_boundary.end(); it_first++)
