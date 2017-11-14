@@ -36,32 +36,6 @@ int LIS(vector<int> &seq, const int n)
 
 int LCS(vector<int> &first_seq, vector<int> &sec_seq, const int n)
 {
-    /*
-    vector<int> old_row(n+1, 0);
-    vector<int> new_row(n+1, 0);
-
-    for(int i = 0; i <= n; i++) //there are n+1 elements in these two rows
-    {
-        for(int j = 0; j <= n; j++)
-        {
-            if(i == 0 || j == 0)
-            {
-                continue;
-            } 
-            else if(first_seq[i - 1] == sec_seq[j - 1]) 
-            {//offset by -1, two seq have length n, but table row has length n + 1!
-                new_row[j] = 1 + old_row[j-1];
-            }
-            else
-            {
-                new_row[j] = max(new_row[j-1], old_row[j]);
-            }
-        }
-        old_row = new_row;
-        new_row = vector<int>(n+1, 0);
-    }
-    return old_row[n];
-    */
     vector<int> indices_of_sec_seq_i_in_first_seq(n + 1, 0);
     // define indices_of_sec_seq_i_in_first_seq[i]: the index of sec_seq[i],
     // which is a charactor appearing in first_seq, in first_seq
