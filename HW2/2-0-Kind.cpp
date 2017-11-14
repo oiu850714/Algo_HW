@@ -5,10 +5,11 @@
 using std::cin;
 using std::vector;
 using std::max;
+using std::lower_bound;
 
 void get_answer(int n, vector<int> &answer_arr)
 {
-
+    answer_arr.push_back(0);// FUCK YOU OFFSET
     for(int i = 0; i < n; i++)
     {
         int tmp;
@@ -17,8 +18,25 @@ void get_answer(int n, vector<int> &answer_arr)
     }
 }
 
+int LIS(vector<int> &seq, const int n)
+{
+    vector<int> IS_of_length_i(n + 1, INT32_MAX);
+    for(int i = 0; i < n; i++)
+    {
+        auto location = lower_bound(IS_of_length_i.begin(), IS_of_length_i.end(), seq[i]);
+        *location = seq[i];
+    }
+
+    for(int i = n; i>=0; i--)
+    {
+        if(IS_of_length_i[i] != INT32_MAX)
+            return i;
+    }
+}
+
 int LCS(vector<int> &first_seq, vector<int> &sec_seq, const int n)
 {
+    /*
     vector<int> old_row(n+1, 0);
     vector<int> new_row(n+1, 0);
 
@@ -43,6 +61,30 @@ int LCS(vector<int> &first_seq, vector<int> &sec_seq, const int n)
         new_row = vector<int>(n+1, 0);
     }
     return old_row[n];
+    */
+    vector<int> indices_of_sec_seq_i_in_first_seq(n + 1, 0);
+    // define indices_of_sec_seq_i_in_first_seq[i]: the index of sec_seq[i],
+    // which is a charactor appearing in first_seq, in first_seq
+
+    //create hash table
+    for(int i = 0; i <= n; i++)
+    {
+        indices_of_sec_seq_i_in_first_seq[first_seq[i]] = i;
+        //e.g.
+        // 1  2  3  4  5  6  7  8  9
+        //[a][d][e][c][b][f][g][h][i]
+        // =>
+        // a  b  c  d  e  f  g  h  i
+        //[1][5][4][2][3][6][7][8][9]
+    }
+
+    vector<int> sec_seq_to_encode_array(n + 1, 0);
+    for(int i = 0; i <= n; i++)
+    {
+        sec_seq_to_encode_array[i] = indices_of_sec_seq_i_in_first_seq[sec_seq[i]];
+    }
+
+    return LIS(sec_seq_to_encode_array, n);
 }
 
 int main()
