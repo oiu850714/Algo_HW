@@ -56,6 +56,9 @@ int main()
 
     vector< vector<int>> tree_edges(n, vector<int>());
 
+    tree_edges[0].push_back(-1);
+    //patch for case that root has only one child
+
     for(int i = 0; i < n-1; i++)
     {
         //now input edge is 1-based, store it to 0-based
